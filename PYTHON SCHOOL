@@ -2,8 +2,6 @@ import random
 
 print ("Grade Calculator\n")
 
-print ("Welcome to my Grade Calculator! Enter your classes and your grade to see your final grade!\n")
-
 #Variables
 num_assignment = int(input("How many assignments are in this class?"))
 total_points = 0
