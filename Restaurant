@@ -1,0 +1,67 @@
+#Restuarant code
+def print_menu(menu):
+    print("Boudreauz & Thibodeaux's Restaurant")
+    print ("------------------------------------")
+    for num, (name,price) in menu.item():
+        print (f"{num}.{name}:${price:.2f}")
+    print ("----------------------------------")
+
+def get_menu_choice(menu):
+    "Ask for a menu number or DONE, and handel bad input"
+    while True:
+        choice = input (
+            "What would you like to order?"
+            "Type the appropriate number of the menu item"
+            "or DONE when order is finished"
+        ).strip()
+
+        if choice.lower() == "done":
+            return "done"
+        if not choice.isdigit():
+            print ("Please enter a NUMBER from the Menu")
+            choice_num = int (choice)
+            if choice_num not in menu:
+                print ("That number is not on the menu")
+                continue
+            return choice_num
+        
+#quantity 
+def get_quantity():
+    "Ask for the quantity and handel bad input"
+    while True:
+        qty_str = input ("Quantity:").strip()
+        try:
+            qty = int (qty_str)
+            if qty <= 0:
+                print ("Please enter a whole number for the item your would like:).\n")
+                continue
+            return qty
+        except ValueError:
+            print ("Please enter a whole number for the item you would like).\n")
+
+
+def main():
+    menu = {
+        1:("Croissant", 3.95),
+        2:("King Cake", 4.95),
+        3:("Crawfish Pie(By the Slice)", 3.65),
+        4:("Catfish Poboy", 14.95),
+        5:("Roast Beef Poboy", 13.95),
+        6:("Sausage PoBoy", 12.95),
+        7:("Gumbo", 5.95)
+    }
+    total = 0.0
+    while True:
+        print_menu (menu)
+        choice = get_menu_choice (menu)
+
+        if choice == "done":
+            break
+        qty = get_quantity()
+        item_name, price = menu [choice]
+        item_total = qty * price
+        print (f"Item added:{qty} x {item_name} + ${item_total:2f}\n")
+        print (f"Your total is ${total:2f}")
+        if __name__== "__main__":
+            main()
+
