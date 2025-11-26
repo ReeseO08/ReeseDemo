@@ -1,67 +1,78 @@
-#Restuarant code
-def print_menu(menu):
-    print("Boudreauz & Thibodeaux's Restaurant")
-    print ("------------------------------------")
-    for num, (name,price) in menu.item():
-        print (f"{num}.{name}:${price:.2f}")
-    print ("----------------------------------")
+menu = {
+    1: ("Croissant", 3.95),
+    2: ("King Cake Slice", 4.95),
+    3: ("Crawfish Pie (By the Slice)", 3.65),
+    4: ("Catfish Poboy", 14.95),
+    5: ("Roast Beef Poboy", 13.95),
+    6: ("Sausage Poboy", 12.95),
+    7: ("Gumbo", 5.95)
+}
 
-def get_menu_choice(menu):
-    "Ask for a menu number or DONE, and handel bad input"
+
+def print_menu():
+    print("Boudreaux & Thibodeaux's Restaurant")
+    print("-----------------------------------")
+    for num, (name, price) in menu.items():
+        print(f"{num}. {name}: ${price:.2f}")
+    print("-----------------------------------")
+
+
+def get_menu_choice():
     while True:
-        choice = input (
-            "What would you like to order?"
-            "Type the appropriate number of the menu item"
-            "or DONE when order is finished"
+        choice = input(
+            "What would you like to order? "
+            "Type the appropriate number of the menu item "
+            "or DONE when order is complete: "
         ).strip()
 
         if choice.lower() == "done":
             return "done"
+
         if not choice.isdigit():
-            print ("Please enter a NUMBER from the Menu")
-            choice_num = int (choice)
-            if choice_num not in menu:
-                print ("That number is not on the menu")
-                continue
-            return choice_num
-        
-#quantity 
+            print("Please enter a NUMBER from the menu or DONE.\n")
+            continue
+
+        choice_num = int(choice)
+        if choice_num not in menu:
+            print("That number is not on the menu. Try again.\n")
+            continue
+
+        return choice_num
+
+
 def get_quantity():
-    "Ask for the quantity and handel bad input"
     while True:
-        qty_str = input ("Quantity:").strip()
+        qty_str = input("Quantity: ").strip()
         try:
-            qty = int (qty_str)
+            qty = int(qty_str)
             if qty <= 0:
-                print ("Please enter a whole number for the item your would like:).\n")
+                print("Quantity must be a positive whole number.\n")
                 continue
             return qty
         except ValueError:
-            print ("Please enter a whole number for the item you would like).\n")
+            print("Please enter a whole number for quantity.\n")
 
 
 def main():
-    menu = {
-        1:("Croissant", 3.95),
-        2:("King Cake", 4.95),
-        3:("Crawfish Pie(By the Slice)", 3.65),
-        4:("Catfish Poboy", 14.95),
-        5:("Roast Beef Poboy", 13.95),
-        6:("Sausage PoBoy", 12.95),
-        7:("Gumbo", 5.95)
-    }
     total = 0.0
+
     while True:
-        print_menu (menu)
-        choice = get_menu_choice (menu)
+        print_menu()
+        choice = get_menu_choice()
 
         if choice == "done":
             break
-        qty = get_quantity()
-        item_name, price = menu [choice]
-        item_total = qty * price
-        print (f"Item added:{qty} x {item_name} + ${item_total:2f}\n")
-        print (f"Your total is ${total:2f}")
-        if __name__== "__main__":
-            main()
 
+        qty = get_quantity()
+        item_name, price = menu[choice]
+        item_total = qty * price
+        total += item_total
+
+        print(f"Item added: {qty} x {item_name} - ${item_total:.2f}\n")
+
+    print("-----------------------------------")
+    print(f"Your total is ${total:.2f}")
+
+
+if __name__ == "__main__":
+    main()
